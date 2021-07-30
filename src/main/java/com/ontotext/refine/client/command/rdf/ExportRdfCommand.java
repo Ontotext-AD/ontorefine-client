@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.BasicHttpEntity;
@@ -64,7 +63,7 @@ public class ExportRdfCommand implements RefineCommand<ExportRdfResponse> {
     }
   }
 
-  private JsonNode getRdfMapping(RefineClient client) throws RefineException, IOException {
+  private JsonNode getRdfMapping(RefineClient client) throws IOException {
     GetOperationsResponse response =
         RefineCommands.getOperations().setProject(project).build().execute(client);
 
@@ -79,8 +78,7 @@ public class ExportRdfCommand implements RefineCommand<ExportRdfResponse> {
   }
 
   @Override
-  public ExportRdfResponse handleResponse(HttpResponse response)
-      throws ClientProtocolException, IOException {
+  public ExportRdfResponse handleResponse(HttpResponse response) throws IOException {
     HttpParser.HTTP_PARSER.assureStatusCode(response, HttpStatus.SC_OK);
     return new ExportRdfResponse()
         .setProject(project)
