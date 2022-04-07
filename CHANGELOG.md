@@ -1,12 +1,11 @@
 # Ontotext OntoRefine Client Library
 
-## Version 1.7
-
-### New
-
-### Changes
+## Version 1.6.1
 
 ### Bug fixes
+
+ - Changed the mechanism of encoding for the content of the entity, which represents the SPARQL conversion query. Apparently there are characters that are not handled
+   correctly by the ``java.net.URLEncoder``. Now we are going to just use ``UrlEncodedFormEntity``, which handles the encoding in correct way.
 
 
 ## Version 1.6
