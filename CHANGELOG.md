@@ -1,14 +1,5 @@
 # Ontotext OntoRefine Client Library
 
-## Version 1.7
-
-### New
-
-### Changes
-
-### Bug fixes
-
-
 ## Version 1.6.3
 
 ### Changes
