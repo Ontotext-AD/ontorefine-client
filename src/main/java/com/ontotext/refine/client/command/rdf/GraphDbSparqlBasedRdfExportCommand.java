@@ -21,7 +21,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.message.BasicNameValuePair;
-import org.eclipse.rdf4j.rio.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +32,16 @@ import org.slf4j.LoggerFactory;
  * The default placeholder set in the command is <code>#project_placeholder#</code>, but it can be
  * changed by providing different one, when building the command.
  *
+ * <p>CAUSION! The command may not work, because of the separation of the GraphDB and Ontotext
+ * Refine tool. The proxying of the request is an attempt to temporary fix it, but in general the
+ * logic is out-of-date.
+ *
  * @author Antoniy Kunchev
  */
-public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfResponse> {
+public class GraphDbSparqlBasedRdfExportCommand implements RefineCommand<ExportRdfResponse> {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SparqlBasedExportRdfCommand.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(GraphDbSparqlBasedRdfExportCommand.class);
 
   private final String project;
   private final String projectPlaceholder;
@@ -46,7 +50,7 @@ public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfRespo
   private final String repository;
   private final OutputType output;
 
-  private SparqlBasedExportRdfCommand(
+  protected GraphDbSparqlBasedRdfExportCommand(
       String project,
       String projectPlaceholder,
       String query,
@@ -63,18 +67,15 @@ public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfRespo
 
   @Override
   public String endpoint() {
-    return "/repositories/{repo}";
+    return "/graphdb-proxy/repositories/{repo}";
   }
 
   @Override
   public ExportRdfResponse execute(RefineClient client) throws RefineException {
     try {
-      RDFFormat rdfFormat = format.getRdfFormat();
-      String acceptHeader = rdfFormat.getDefaultMIMEType() + ";charset=" + rdfFormat.getCharset();
-
       HttpUriRequest request = RequestBuilder
           .post(client.createUri(endpoint().replace("{repo}", repository)))
-          .addHeader(ACCEPT, acceptHeader)
+          .addHeader(ACCEPT, RdfExportUtils.getAcceptHeader(format))
           .addHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.withCharset(UTF_8).toString())
           .setEntity(buildEntity())
           .build();
@@ -90,7 +91,7 @@ public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfRespo
 
   /**
    * Builds the request entity with the expected content. The produced {@link HttpEntity} is
-   * repeatable so that it can be retried.
+   * repeatable so that it can be used in retries.
    */
   private HttpEntity buildEntity() throws IOException {
     return new BufferedHttpEntity(new UrlEncodedFormEntity(buildRequestContent(), UTF_8));
@@ -121,7 +122,7 @@ public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfRespo
   }
 
   /**
-   * Builder for {@link SparqlBasedExportRdfCommand}.
+   * Builder for {@link GraphDbSparqlBasedRdfExportCommand}.
    *
    * @author Antoniy Kunchev
    */
@@ -165,17 +166,17 @@ public class SparqlBasedExportRdfCommand implements RefineCommand<ExportRdfRespo
     }
 
     /**
-     * Builds a {@link SparqlBasedExportRdfCommand}.
+     * Builds a {@link GraphDbSparqlBasedRdfExportCommand}.
      *
      * @return a command
      */
-    public SparqlBasedExportRdfCommand build() {
+    public GraphDbSparqlBasedRdfExportCommand build() {
       notBlank(project, "Missing 'project' argument");
       notBlank(projectPlaceholder, "The 'projectPlaceholder' argument should not be blank");
       notBlank(query, "Missing 'query' argument");
       notNull(format, "Missing 'format' argument");
       notBlank(repository, "Missing 'repository' argument");
-      return new SparqlBasedExportRdfCommand(
+      return new GraphDbSparqlBasedRdfExportCommand(
           project, projectPlaceholder, query, format, repository, output);
     }
   }

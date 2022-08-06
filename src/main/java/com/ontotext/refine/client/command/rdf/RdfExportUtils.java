@@ -3,15 +3,16 @@ package com.ontotext.refine.client.command.rdf;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.eclipse.rdf4j.rio.RDFFormat;
 
 /**
- * Contains convenient methods for files processing during RDF export.
+ * Contains convenient methods used in RDF export commands.
  *
  * @author Antoniy Kunchev
  */
-class RdfExportFileUtils {
+class RdfExportUtils {
 
-  private RdfExportFileUtils() {
+  private RdfExportUtils() {
     throw new UnsupportedOperationException("Utility class.");
   }
 
@@ -29,5 +30,16 @@ class RdfExportFileUtils {
     Path tempDirectory = Files.createTempDirectory("ontorefine-client-");
     String suffix = "project-" + project + "-rdfExport-";
     return Files.createTempFile(tempDirectory, suffix, ".tmp");
+  }
+
+  /**
+   * Provides value for accept header derived from the input format.
+   *
+   * @param format to be used to build the header value
+   * @return string representation of the header value
+   */
+  static String getAcceptHeader(ResultFormat format) {
+    RDFFormat rdfFormat = format.getRdfFormat();
+    return rdfFormat.getDefaultMIMEType() + ";charset=" + rdfFormat.getCharset();
   }
 }

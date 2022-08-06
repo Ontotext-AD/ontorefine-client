@@ -19,7 +19,7 @@ class RefineClientsTest {
   private static final String URI = "http://ontorefine.com/orefine";
 
   @Test
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings("removal")
   void create_successful() throws URISyntaxException {
     assertNotNull(assertDoesNotThrow(() -> RefineClients.create(URI)));
   }

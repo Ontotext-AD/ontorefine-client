@@ -1,5 +1,7 @@
 package com.ontotext.refine.client.util.mappings;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +47,19 @@ final class MappingsStructures {
     private String description;
 
     @JsonProperty
+    @JsonAlias({"op", "operation"})
     private Object operation;
+  }
+
+  /**
+   * Relaxed structure for materializing the single operation from operations JSON. It will ignore
+   * any unknown property.
+   *
+   * @author Antoniy Kunchev
+   */
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  static class RelaxedOperationEntry extends OperationEntry {
+    // nothing more
   }
 
   /**
