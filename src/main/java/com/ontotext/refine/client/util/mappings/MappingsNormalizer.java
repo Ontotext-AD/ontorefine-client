@@ -9,7 +9,9 @@ import com.ontotext.refine.client.command.operations.ApplyOperationsCommand;
 import com.ontotext.refine.client.command.operations.GetOperationsCommand;
 import com.ontotext.refine.client.exceptions.RefineException;
 import com.ontotext.refine.client.util.mappings.MappingsStructures.MappingJson;
+import com.ontotext.refine.client.util.mappings.MappingsStructures.OperationEntry;
 import com.ontotext.refine.client.util.mappings.MappingsStructures.OperationsJson;
+import com.ontotext.refine.client.util.mappings.MappingsStructures.RelaxedOperationEntry;
 import java.util.List;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
@@ -50,10 +52,21 @@ public class MappingsNormalizer {
       return extractMappingsFromOperations(json);
     }
 
+    // operations array JSON case
+    if (JSON_PARSER.isAssignable(json, OperationEntry[].class)) {
+      return extractMappingsFromOperations(json);
+    }
+
     // project models case
     String mappingsStr = tryExtractFromModels(json);
     if (mappingsStr != null) {
       return mappingsStr;
+    }
+
+    // last resort
+    // operations array JSON case
+    if (JSON_PARSER.isAssignable(json, RelaxedOperationEntry[].class)) {
+      return extractMappingsFromOperations(json);
     }
 
     return null;

@@ -1,6 +1,6 @@
 package com.ontotext.refine.client.command.rdf;
 
-import static com.ontotext.refine.client.command.rdf.RdfExportFileUtils.createTempFile;
+import static com.ontotext.refine.client.command.rdf.RdfExportUtils.createTempFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

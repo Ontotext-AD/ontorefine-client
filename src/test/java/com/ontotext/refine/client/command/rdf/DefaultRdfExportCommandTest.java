@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import com.ontotext.refine.client.command.BaseCommandTest;
@@ -27,11 +28,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 
 /**
- * Test for {@link DefaultExportRdfCommand}.
+ * Test for {@link DefaultRdfExportCommand}.
  *
  * @author Antoniy Kunchev
  */
-class ExportRdfCommandTest extends BaseCommandTest<ExportRdfResponse, DefaultExportRdfCommand> {
+class DefaultRdfExportCommandTest
+    extends BaseCommandTest<ExportRdfResponse, DefaultRdfExportCommand> {
 
   @Captor
   private ArgumentCaptor<HttpUriRequest> requestCaptor;
@@ -44,11 +46,11 @@ class ExportRdfCommandTest extends BaseCommandTest<ExportRdfResponse, DefaultExp
   }
 
   @Override
-  protected DefaultExportRdfCommand command() {
+  protected DefaultRdfExportCommand command() {
     return commandBuilder().build();
   }
 
-  private DefaultExportRdfCommand.Builder commandBuilder() {
+  private DefaultRdfExportCommand.Builder commandBuilder() {
     return RefineCommands.exportRdf()
         .setProject(PROJECT_ID)
         .setMapping(mapping)
@@ -89,10 +91,25 @@ class ExportRdfCommandTest extends BaseCommandTest<ExportRdfResponse, DefaultExp
   }
 
   @Test
+  void execute_failToExtractMapping() throws IOException {
+
+    DefaultRdfExportCommand command = commandBuilder().setMapping("{}").build();
+    RefineException exc = assertThrows(RefineException.class, () -> command.execute(client));
+
+    assertEquals(
+        "Export of RDF data for project: '" + PROJECT_ID
+            + "' failed due to unavailable mapping. Please recheck if the"
+            + " mapping you are providing is correct.",
+        exc.getMessage());
+
+    verifyNoInteractions(client);
+  }
+
+  @Test
   void handleResponse_asStringExplicit() throws IOException {
     byte[] bytes = "dummy RDF data".getBytes();
     try (InputStream is = new ByteArrayInputStream(bytes)) {
-      DefaultExportRdfCommand command =
+      DefaultRdfExportCommand command =
           commandBuilder().setFormat(ResultFormat.TURTLE).setOutput(OutputType.STRING).build();
       ExportRdfResponse response =
           command.handleResponse(okResponse(is, BigInteger.valueOf(bytes.length)));
@@ -104,7 +121,7 @@ class ExportRdfCommandTest extends BaseCommandTest<ExportRdfResponse, DefaultExp
   void handleResponse_asStringExceedingBufferSize() throws IOException {
     byte[] bytes = "dummy RDF data".getBytes();
     try (InputStream is = new ByteArrayInputStream(bytes)) {
-      DefaultExportRdfCommand command =
+      DefaultRdfExportCommand command =
           commandBuilder().setFormat(ResultFormat.TURTLE).setOutput(OutputType.STRING).build();
       ExportRdfResponse response =
           command.handleResponse(okResponse(is, BigInteger.valueOf(Integer.MAX_VALUE)));
@@ -115,7 +132,7 @@ class ExportRdfCommandTest extends BaseCommandTest<ExportRdfResponse, DefaultExp
   @Test
   void handleResponse_asFileExplicit() throws IOException {
     try (InputStream is = new ByteArrayInputStream("dummy RDF data".getBytes())) {
-      DefaultExportRdfCommand command =
+      DefaultRdfExportCommand command =
           commandBuilder().setFormat(ResultFormat.TURTLE).setOutput(OutputType.FILE).build();
       ExportRdfResponse response = command.handleResponse(okResponse(is));
       assertEquals("dummy RDF data", FileUtils.readFileToString(response.getResultFile(), UTF_8));

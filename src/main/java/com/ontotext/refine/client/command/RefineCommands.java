@@ -10,8 +10,9 @@ import com.ontotext.refine.client.command.operations.GetOperationsCommand;
 import com.ontotext.refine.client.command.preferences.GetPreferenceCommand;
 import com.ontotext.refine.client.command.preferences.SetPreferenceCommand;
 import com.ontotext.refine.client.command.processes.GetProcessesCommand;
-import com.ontotext.refine.client.command.rdf.DefaultExportRdfCommand;
-import com.ontotext.refine.client.command.rdf.SparqlBasedExportRdfCommand;
+import com.ontotext.refine.client.command.rdf.DefaultRdfExportCommand;
+import com.ontotext.refine.client.command.rdf.GraphDbSparqlBasedRdfExportCommand;
+import com.ontotext.refine.client.command.rdf.SparqlBasedRdfExportCommand;
 import com.ontotext.refine.client.command.reconcile.GuessColumnTypeCommand;
 import com.ontotext.refine.client.command.reconcile.ReconServiceRegistrationCommand;
 import com.ontotext.refine.client.command.reconcile.ReconcileCommand;
@@ -104,21 +105,33 @@ public interface RefineCommands {
   }
 
   /**
-   * Provides a builder instance for the {@link DefaultExportRdfCommand}.
+   * Provides a builder instance for the {@link DefaultRdfExportCommand}.
    *
    * @return new builder instance
    */
-  static DefaultExportRdfCommand.Builder exportRdf() {
-    return new DefaultExportRdfCommand.Builder();
+  static DefaultRdfExportCommand.Builder exportRdf() {
+    return new DefaultRdfExportCommand.Builder();
   }
 
   /**
-   * Provides a builder instance for the {@link SparqlBasedExportRdfCommand}.
+   * Provides a builder instance for the {@link SparqlBasedRdfExportCommand}.
    *
    * @return new builder instance
    */
-  static SparqlBasedExportRdfCommand.Builder exportRdfUsingSparql() {
-    return new SparqlBasedExportRdfCommand.Builder();
+  static SparqlBasedRdfExportCommand.Builder exportAsRdf() {
+    return new SparqlBasedRdfExportCommand.Builder();
+  }
+
+  /**
+   * Provides a builder instance for the {@link GraphDbSparqlBasedRdfExportCommand}.
+   *
+   * <p>CAUSION! The command may not work, because of the separation of the GraphDB and Ontotext
+   * Refine tool. The logic is out-of-date, regardless of the fix that is implemented at the moment.
+   *
+   * @return new builder instance
+   */
+  static GraphDbSparqlBasedRdfExportCommand.Builder exportRdfUsingSparql() {
+    return new GraphDbSparqlBasedRdfExportCommand.Builder();
   }
 
   /**

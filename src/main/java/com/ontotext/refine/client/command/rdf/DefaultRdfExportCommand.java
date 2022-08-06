@@ -18,7 +18,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.BufferedHttpEntity;
-import org.eclipse.rdf4j.rio.RDFFormat;
 
 /**
  * A command that exports the data of specific project in RDF format using the mapping defined in
@@ -26,14 +25,14 @@ import org.eclipse.rdf4j.rio.RDFFormat;
  *
  * @author Antoniy Kunchev
  */
-public class DefaultExportRdfCommand implements RefineCommand<ExportRdfResponse> {
+public class DefaultRdfExportCommand implements RefineCommand<ExportRdfResponse> {
 
   private final String project;
   private final String mapping;
   private final ResultFormat format;
   private final OutputType output;
 
-  private DefaultExportRdfCommand(
+  private DefaultRdfExportCommand(
       String project, String mapping, ResultFormat format, OutputType output) {
     this.project = project;
     this.mapping = mapping;
@@ -49,22 +48,29 @@ public class DefaultExportRdfCommand implements RefineCommand<ExportRdfResponse>
   @Override
   public ExportRdfResponse execute(RefineClient client) throws RefineException {
     try {
+      String normalizedMapping = MappingsNormalizer.forRdfExport(mapping);
+      if (normalizedMapping == null) {
+        throw new RefineException(
+            "Export of RDF data for project: '%s' failed due to unavailable mapping."
+                + " Please recheck if the mapping you are providing is correct.",
+            project);
+      }
+
       BasicHttpEntity entity = new BasicHttpEntity();
       entity.setContentType(APPLICATION_JSON.getMimeType());
       entity.setContentEncoding(APPLICATION_JSON.getCharset().toString());
-      entity.setContent(IOUtils.toInputStream(MappingsNormalizer.forRdfExport(mapping), UTF_8));
-
-      RDFFormat rdfFormat = format.getRdfFormat();
-      String acceptHeader = rdfFormat.getDefaultMIMEType() + ";charset=" + rdfFormat.getCharset();
+      entity.setContent(IOUtils.toInputStream(normalizedMapping, UTF_8));
 
       HttpUriRequest request = RequestBuilder
           .post(client.createUri(endpoint() + ":" + project))
           .addHeader(CONTENT_TYPE, APPLICATION_JSON.getMimeType())
-          .addHeader(ACCEPT, acceptHeader)
+          .addHeader(ACCEPT, RdfExportUtils.getAcceptHeader(format))
           .setEntity(new BufferedHttpEntity(entity))
           .build();
 
       return client.execute(request, this);
+    } catch (RefineException re) {
+      throw re;
     } catch (IOException ioe) {
       throw new RefineException(
           "Export of RDF data failed for project: '%s' due to: %s",
@@ -79,7 +85,7 @@ public class DefaultExportRdfCommand implements RefineCommand<ExportRdfResponse>
   }
 
   /**
-   * Builder for {@link DefaultExportRdfCommand}.
+   * Builder for {@link DefaultRdfExportCommand}.
    *
    * @author Antoniy Kunchev
    */
@@ -111,15 +117,15 @@ public class DefaultExportRdfCommand implements RefineCommand<ExportRdfResponse>
     }
 
     /**
-     * Builds a {@link DefaultExportRdfCommand}.
+     * Builds a {@link DefaultRdfExportCommand}.
      *
      * @return a command
      */
-    public DefaultExportRdfCommand build() {
+    public DefaultRdfExportCommand build() {
       notBlank(project, "Missing 'project' argument");
       notBlank(mapping, "Missing 'mapping' argument");
       notNull(format, "Missing 'format' argument");
-      return new DefaultExportRdfCommand(project, mapping, format, output);
+      return new DefaultRdfExportCommand(project, mapping, format, output);
     }
   }
 }

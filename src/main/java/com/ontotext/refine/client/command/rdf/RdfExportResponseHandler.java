@@ -1,6 +1,6 @@
 package com.ontotext.refine.client.command.rdf;
 
-import static com.ontotext.refine.client.command.rdf.RdfExportFileUtils.createTempFile;
+import static com.ontotext.refine.client.command.rdf.RdfExportUtils.createTempFile;
 import static com.ontotext.refine.client.util.HttpParser.HTTP_PARSER;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.http.HttpStatus.SC_OK;
@@ -10,10 +10,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for providing handling of the {@link HttpResponse} from the RDF export commands.
@@ -21,8 +21,6 @@ import org.slf4j.LoggerFactory;
  * @author Antoniy Kunchev
  */
 class RdfExportResponseHandler {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(RdfExportResponseHandler.class);
 
   private RdfExportResponseHandler() {
     throw new UnsupportedOperationException("Utility classes should not be instantiated.");
@@ -49,7 +47,8 @@ class RdfExportResponseHandler {
         return toFile(stream, rdfResponse);
       }
 
-      boolean buffer = canBuffer(entity.getContentLength(), project);
+      long length = Math.max(entity.getContentLength(), getFromHeader(response));
+      boolean buffer = canBuffer(length);
       if (OutputType.STRING.equals(output) && buffer) {
         return toStr(stream, rdfResponse);
       }
@@ -58,16 +57,13 @@ class RdfExportResponseHandler {
     }
   }
 
-  private static boolean canBuffer(long length, String project) {
-    if (length > 0 && length < Integer.MAX_VALUE) {
-      return true;
-    }
+  private static long getFromHeader(HttpResponse response) {
+    Header header = response.getFirstHeader(HttpHeaders.CONTENT_LENGTH);
+    return header == null ? 0 : Long.valueOf(header.getValue());
+  }
 
-    LOGGER.warn(
-        "The result from the RDF export of project '{}' cannot be buffered in-memory."
-            + " As fallback the result will be stored in temporary file.",
-        project);
-    return false;
+  private static boolean canBuffer(long length) {
+    return length > 0 && length < Integer.MAX_VALUE;
   }
 
   private static ExportRdfResponse toStr(InputStream stream, ExportRdfResponse response)

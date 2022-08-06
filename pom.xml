@@ -75,6 +75,7 @@
         <e2e.graphdb.docker.image>ontotext/graphdb:10.0.0-M1</e2e.graphdb.docker.image>
 
         <checkstyle.enabled>true</checkstyle.enabled>
+        <skip.dependency.check>false</skip.dependency.check>
     </properties>
 
     <profiles>
@@ -82,6 +83,13 @@
             <id>develop</id>
             <properties>
                 <checkstyle.enabled>false</checkstyle.enabled>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <checkstyle.enabled>false</checkstyle.enabled>
+                <skip.dependency.check>true</skip.dependency.check>
             </properties>
         </profile>
     </profiles>
@@ -246,6 +254,7 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency.check.plugin.version}</version>
                 <configuration>
+                    <skip>${skip.dependency.check}</skip>
                     <failBuildOnCVSS>${cvss.threshold}</failBuildOnCVSS>
                 </configuration>
                 <executions>

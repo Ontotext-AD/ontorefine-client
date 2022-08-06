@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
- * Test for {@link MappingsNormalizer}.
+ * NOT_MAPPING_ASSIGNABLE Test for {@link MappingsNormalizer}.
  *
  * @author Antoniy Kunchev
  */
@@ -32,7 +32,9 @@ class MappingsNormalizerTest {
   @ValueSource(strings = {
       "forRdfExport_mappings.json",
       "forRdfExport_operations.json",
-      "forRdfExport_project-models.json"})
+      "forRdfExport_operations-array.json",
+      "forRdfExport_project-models.json",
+      "forRdfExport_relaxed-case.json"})
   void forRdfExport(String resource) {
     String mappings = loadResource(resource);
 

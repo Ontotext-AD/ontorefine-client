@@ -129,7 +129,7 @@ public abstract class IntegrationTest {
         HttpHost httpHost = new HttpHost(GDB_DOCKER.getHost(), GDB_DOCKER.getMappedPort(PORT));
         BasicCredentialsProvider provider = new BasicCredentialsProvider();
         provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("admin", "root"));
-        return RefineClients.securityAware(httpHost.toURI(), provider);
+        securedRefineClient = RefineClients.securityAware(httpHost.toURI(), provider);
       } catch (URISyntaxException uriExc) {
         throw new RuntimeException("Failed to create secured refine client.", uriExc);
       }
@@ -141,7 +141,7 @@ public abstract class IntegrationTest {
     if (refineClient == null) {
       try {
         HttpHost httpHost = new HttpHost(GDB_DOCKER.getHost(), GDB_DOCKER.getMappedPort(PORT));
-        return RefineClients.standard(httpHost.toURI());
+        refineClient = RefineClients.standard(httpHost.toURI());
       } catch (URISyntaxException uriExc) {
         throw new RuntimeException("Failed to create refine client.", uriExc);
       }

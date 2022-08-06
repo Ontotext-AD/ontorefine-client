@@ -4,14 +4,30 @@
 
 ### New
 
+ - Added new profile `local` for Maven builds which disables the dependency and checkstyle checks. This profile is used for quick local build that is to be used for
+   testing.
+ - Introduced new command for RDF export, which uses Ontotext Refine to generate the RDF, instead GraphDB. The command uses SPARQL CONSTRUCT query to map the tabular
+   project data to RDF. The command uses the SAPRQL endpoint exposed by Ontotext Refine allowing execution of query over the data of specific refine project.
+ - `MappingsNormalizer` now handles additional case, where the mappings JSON is passes as array of operations.
+ 
+### Breaking Changes
+
+ - The current version introduces some breaking changes related to the separation of the GraphDB and Ontotext Refine. The command for RDF export, now named
+   `GraphDbSparqlBasedRdfExportCommand` will not work with GraphDB 9 anymore. The command will be kept as it is still relevant and it can be adjusted to work with
+   GraphDB instance for more flexibility in the future. Currently there is a workaround allowing the command to work with the the first version of the Ontotext Refine.
+
 ### Changes
 
  - Updates the version of all third party dependencies used by the project. This is done in order to keep the project up-to-date and avoid potential security issues due
    vulnerabilities in the libraries.
  - Updated the CI and release workflow configurations to use `temurin` Java distribution instead of `adopt`. The main reason for this change is the fact that `adopt`
    actually moved to `temurin` and it won't be supported anymore.
+ - Minor refactoring and renaming for some of the command classes.
 
 ### Bug fixes
+
+ - Updated the retrival of the content length, when deciding whether to store the RDF export result in the memory or a file. Now instead of only relying on the entity
+   content length property, the logic will try to extract the length from the response header.
 
 
 ## Version 1.6.3
