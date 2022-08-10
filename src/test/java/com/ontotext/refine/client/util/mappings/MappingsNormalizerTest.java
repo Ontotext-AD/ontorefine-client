@@ -48,6 +48,12 @@ class MappingsNormalizerTest {
     assertNull(MappingsNormalizer.forRdfExport("{}"));
   }
 
+  @Test
+  void forRdfExport_jsonWithoutMapping() {
+    assertNull(MappingsNormalizer
+        .forRdfExport(loadResource("forRdfExport_operations-without-mapping.json")));
+  }
+
   @ParameterizedTest
   @NullAndEmptySource
   void forRdfExport_emptyOrNullArg(String input) {
