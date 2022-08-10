@@ -1,0 +1,18 @@
+[
+  {
+    "description": "Text transform on 725 cells in column City: value.toTitlecase()",
+    "operation": {
+      "op": "core/text-transform",
+      "engineConfig": {
+        "facets": [],
+        "mode": "row-based"
+      },
+      "columnName": "City",
+      "expression": "value.toTitlecase()",
+      "onError": "keep-original",
+      "repeat": false,
+      "repeatCount": 10,
+      "description": "Text transform on cells in column City using expression value.toTitlecase()"
+    }
+  }
+]

@@ -77,6 +77,10 @@ public class MappingsNormalizer {
     try {
       List<JsonNode> listOfMappings = JSON_PARSER.parseJson(json).findValues("mapping");
       listOfMappings.removeIf(NOT_MAPPING_ASSIGNABLE);
+      if (listOfMappings.isEmpty()) {
+        return null;
+      }
+
       JsonNode lastMapping = listOfMappings.get(listOfMappings.size() - 1);
       return lastMapping.toString();
     } catch (RefineException re) { // NOSONAR
