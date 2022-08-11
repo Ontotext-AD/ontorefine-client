@@ -7,7 +7,7 @@
 
     <groupId>com.ontotext</groupId>
     <artifactId>ontorefine-client</artifactId>
-    <version>1.7.0</version>
+    <version>1.7.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>An Ontotext Refine Client Library</description>
@@ -39,7 +39,7 @@
         <repository>
             <id>all-onto</id>
             <name>Ontotext Public Maven</name>
-            <url>http://maven.ontotext.com/content/repositories/public</url>
+            <url>https://maven.ontotext.com/content/repositories/public</url>
         </repository>
     </distributionManagement>
 

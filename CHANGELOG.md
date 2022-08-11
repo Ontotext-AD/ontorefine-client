@@ -1,5 +1,21 @@
 # Ontotext OntoRefine Client Library
 
+## Version 1.7.1
+
+### New
+
+ - TBD
+
+### Changes
+
+ - TBD
+
+### Bug fixes
+
+ - Fixed the publishing of the library in the Maven Repository, when new release is created. The problem was that the URL for the repository was still using `HTTP`
+   protocol instead of `HTTPS`, which caused an error while uploading the artifacts into the repository.
+
+
 ## Version 1.7
 
 ### New
