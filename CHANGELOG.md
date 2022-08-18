@@ -4,8 +4,8 @@
 
 ### New
 
- - TBD
-
+ - Added `record-based` options for the `Engines` enum. The reason is completeness.
+ 
 ### Changes
 
  - TBD
@@ -14,7 +14,8 @@
 
  - Fixed the publishing of the library in the Maven Repository, when new release is created. The problem was that the URL for the repository was still using `HTTP`
    protocol instead of `HTTPS`, which caused an error while uploading the artifacts into the repository.
-
+ - Fixed the string serialization of the `Engines` enum values. The previous mechanism was causing parsing errors in the OpenRefine, when the `export` command was
+   executed.
 
 ## Version 1.7
 

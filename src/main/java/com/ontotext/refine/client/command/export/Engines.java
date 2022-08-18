@@ -1,7 +1,8 @@
 package com.ontotext.refine.client.command.export;
 
+import static com.ontotext.refine.client.util.OrcJsonFactory.object;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 /**
  * Provides a engine options for the {@link ExportRowsCommand}.
@@ -10,7 +11,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
  */
 public enum Engines {
 
-  ROW_BASED(JsonNodeFactory.instance.objectNode().put("mode", "row-based"));
+  ROW_BASED(object().put("mode", "row-based")),
+
+  RECORD_BASED(object().put("mode", "record-based"));
 
   private final JsonNode engine;
 
@@ -25,6 +28,6 @@ public enum Engines {
    *         refine tool
    */
   public String get() {
-    return engine.asText();
+    return engine.toString();
   }
 }
