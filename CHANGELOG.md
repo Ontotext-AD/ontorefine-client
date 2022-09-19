@@ -1,5 +1,20 @@
 # Ontotext OntoRefine Client Library
 
+## Version 1.7.2
+
+### New
+
+ - TBD
+
+### Changes
+
+ - TBD
+
+### Bug fixes
+
+ - TBD
+
+
 ## Version 1.7.1
 
 ### New
