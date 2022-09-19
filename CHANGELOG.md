@@ -5,10 +5,10 @@
 ### New
 
  - Added `record-based` options for the `Engines` enum. The reason is completeness.
- 
+
 ### Changes
 
- - TBD
+ - Removed the `TODO.md` as we aren't really keeping it up-to-date. Instead we are using internal JIRA tasks and the issues tracker of the project.
 
 ### Bug fixes
 
@@ -16,6 +16,7 @@
    protocol instead of `HTTPS`, which caused an error while uploading the artifacts into the repository.
  - Fixed the string serialization of the `Engines` enum values. The previous mechanism was causing parsing errors in the OpenRefine, when the `export` command was
    executed.
+
 
 ## Version 1.7
 
