@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * Holds the result from the {@link ExportRowsCommand}.
- * 
+ *
  * @author Antoniy Kunchev
  */
 public class ExportRowsResponse {

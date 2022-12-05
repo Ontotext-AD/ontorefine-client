@@ -19,20 +19,6 @@ public interface RefineClients {
   /**
    * Creates default {@link RefineClient} instance.
    *
-   * @deprecated use {@link #standard(String)} instead
-   * @param uri to be used as base for the commands execution. Basically the address of the Refine
-   *        tool instance
-   * @return new default {@link RefineClient} instance
-   * @throws URISyntaxException when the input <code>uri</code> argument is invalid
-   */
-  @Deprecated(since = "1.4", forRemoval = true)
-  static RefineClient create(String uri) throws URISyntaxException {
-    return standard(uri);
-  }
-
-  /**
-   * Creates default {@link RefineClient} instance.
-   *
    * @param uri to be used as base for the commands execution. Basically the address of the Refine
    *        tool instance
    * @return new default {@link RefineClient} instance
