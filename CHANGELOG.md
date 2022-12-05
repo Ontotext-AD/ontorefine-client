@@ -4,11 +4,18 @@
 
 ### New
 
- - TBD
+ - Introduced new command for retrieval of project configurations, which is based on the Refine extension. This extension provides a way for the users to export more
+   complete set of configurations for a project so that they can be reused for creation of other projects. The configurations include the import options for the uploaded
+   dataset and the operations history of the project.
+   The primary reason for the extension is the usage of this configuration in the CLI transformation pipelines. Therefore the CLI commands will be updated to accept and
+   work this configuration.
 
 ### Changes
 
- - TBD
+ - Removed old `create` method from `RefineClients`. The method was deprecated and announced for removal in version `1.4`. All of the related logic and tests were either
+   updated or removed.
+ - Updates the version of all third party dependencies used by the project. This is done in order to keep the project up-to-date and avoid potential security issues due
+   vulnerabilities in the libraries.
 
 ### Bug fixes
 
@@ -19,7 +26,7 @@
 
 ### New
 
- - Added `record-based` options for the `Engines` enum. The reason is completeness.
+ - Added `record-based` options for the `Engines` enum. The reason is, completeness.
 
 ### Changes
 

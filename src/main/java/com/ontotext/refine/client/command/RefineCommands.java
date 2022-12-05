@@ -10,6 +10,7 @@ import com.ontotext.refine.client.command.operations.GetOperationsCommand;
 import com.ontotext.refine.client.command.preferences.GetPreferenceCommand;
 import com.ontotext.refine.client.command.preferences.SetPreferenceCommand;
 import com.ontotext.refine.client.command.processes.GetProcessesCommand;
+import com.ontotext.refine.client.command.project.configurations.GetProjectConfigurationsCommand;
 import com.ontotext.refine.client.command.rdf.DefaultRdfExportCommand;
 import com.ontotext.refine.client.command.rdf.GraphDbSparqlBasedRdfExportCommand;
 import com.ontotext.refine.client.command.rdf.SparqlBasedRdfExportCommand;
@@ -195,5 +196,14 @@ public interface RefineCommands {
    */
   static GetPreferenceCommand.Builder getPreference() {
     return new GetPreferenceCommand.Builder();
+  }
+
+  /**
+   * Provides a builder instance for the {@link GetProjectConfigurationsCommand}.
+   *
+   * @return new builder instance
+   */
+  static GetProjectConfigurationsCommand.Builder getProjectConfigurations() {
+    return new GetProjectConfigurationsCommand.Builder();
   }
 }

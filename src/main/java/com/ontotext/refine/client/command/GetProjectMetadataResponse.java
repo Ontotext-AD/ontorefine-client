@@ -2,6 +2,9 @@ package com.ontotext.refine.client.command;
 
 import com.ontotext.refine.client.ProjectMetadata;
 
+/**
+ * Holds the response from {@link GetProjectMetadataCommand}.
+ */
 public class GetProjectMetadataResponse {
 
   private final ProjectMetadata projectMetadata;

@@ -127,7 +127,7 @@ public class GuessColumnTypeCommandResponse {
 
     @Override
     public int hashCode() {
-      return Objects.hash(count, id,name, score);
+      return Objects.hash(count, id, name, score);
     }
 
     @Override

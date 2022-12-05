@@ -4,10 +4,9 @@ import com.ontotext.refine.client.RefineResponse;
 import com.ontotext.refine.client.ResponseCode;
 import org.apache.commons.lang3.Validate;
 
-
 /**
  * Holds the response from {@link SetPreferenceCommand}.
- * 
+ *
  * @author Antoniy Kunchev
  */
 public class SetPreferenceCommandResponse extends RefineResponse {

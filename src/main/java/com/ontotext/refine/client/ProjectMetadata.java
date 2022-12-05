@@ -1,5 +1,8 @@
 package com.ontotext.refine.client;
 
+/**
+ * Represents part of the project metadata model.
+ */
 public class ProjectMetadata {
 
   private String name;
