@@ -1,6 +1,5 @@
 package com.ontotext.refine.client.command.create;
 
-import static com.ontotext.refine.client.util.HttpParser.HTTP_PARSER;
 import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.apache.http.HttpHeaders.ACCEPT;
@@ -91,11 +90,18 @@ public class CreateProjectCommand implements RefineCommand<CreateProjectResponse
   @Override
   public CreateProjectResponse handleResponse(HttpResponse response) throws IOException {
     // TODO: parse errors in refine are returned as HTML
-    HTTP_PARSER.assureStatusCode(response, SC_MOVED_TEMPORARILY);
+    if (SC_MOVED_TEMPORARILY != response.getStatusLine().getStatusCode()) {
+      throw new RefineException(
+          "Failed to create refine project. Please ensure that all of the provided configurations"
+              + " and data are correct.");
+    }
+
     Header location = response.getFirstHeader("Location");
     if (location == null) {
-      throw new RefineException("No location header found.");
+      throw new RefineException(
+          "No location header found. The header is required for the project identifier retrieval.");
     }
+
     URL url = new URL("http", "", location.getValue());
     return new CreateProjectResponse(url);
   }

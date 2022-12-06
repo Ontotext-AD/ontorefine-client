@@ -19,7 +19,8 @@
 
 ### Bug fixes
 
- - TBD
+ - Fixed the error messages for creation of the projects. The expected response code from the operation is usually `302`. When the code is different, the produced error
+   message is rather misleading, then helpful. There are cases when the code is `200` and the user receives message for error with status code `200`.
 
 
 ## Version 1.7.1
