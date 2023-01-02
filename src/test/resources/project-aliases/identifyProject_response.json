@@ -1,0 +1,8 @@
+{
+  "identifier": 1234567890987,
+  "original": "ontorefine:test-alias",
+  "aliases": [
+    "test-alias"
+  ],
+  "prefix": "ontorefine"
+}

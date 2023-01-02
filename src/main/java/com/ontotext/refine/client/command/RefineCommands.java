@@ -10,6 +10,8 @@ import com.ontotext.refine.client.command.operations.GetOperationsCommand;
 import com.ontotext.refine.client.command.preferences.GetPreferenceCommand;
 import com.ontotext.refine.client.command.preferences.SetPreferenceCommand;
 import com.ontotext.refine.client.command.processes.GetProcessesCommand;
+import com.ontotext.refine.client.command.project.aliases.IdentifyProjectCommand;
+import com.ontotext.refine.client.command.project.aliases.UpdateProjectAliasesCommand;
 import com.ontotext.refine.client.command.project.configurations.GetProjectConfigurationsCommand;
 import com.ontotext.refine.client.command.rdf.DefaultRdfExportCommand;
 import com.ontotext.refine.client.command.rdf.GraphDbSparqlBasedRdfExportCommand;
@@ -199,11 +201,33 @@ public interface RefineCommands {
   }
 
   /**
-   * Provides a builder instance for the {@link GetProjectConfigurationsCommand}.
+   * Provides a builder instance for the {@link GetProjectConfigurationsCommand}.<br>
+   * The command requires 'project-configurations' extension.<br>
+   * This extension is added by default to Ontotext Refine version 1.2 and above.
    *
    * @return new builder instance
    */
   static GetProjectConfigurationsCommand.Builder getProjectConfigurations() {
     return new GetProjectConfigurationsCommand.Builder();
+  }
+
+  /**
+   * Provides a builder instance for the {@link IdentifyProjectCommand}.<br>
+   * The command requires Ontotext Refine version 1.2 and above.
+   *
+   * @return new builder instance
+   */
+  static IdentifyProjectCommand.Builder identifyProject() {
+    return new IdentifyProjectCommand.Builder();
+  }
+
+  /**
+   * Provides a builder instance for the {@link UpdateProjectAliasesCommand}.<br>
+   * The command requires Ontotext Refine version 1.2 and above.
+   *
+   * @return new builder instance
+   */
+  static UpdateProjectAliasesCommand.Builder updateProjectAliases() {
+    return new UpdateProjectAliasesCommand.Builder();
   }
 }
