@@ -9,6 +9,10 @@
    dataset and the operations history of the project.
    The primary reason for the extension is the usage of this configuration in the CLI transformation pipelines. Therefore the CLI commands will be updated to accept and
    work this configuration.
+ - Introduced new command for identifying project by using alias or project id. The command is related to the new functionality introduced in Ontotext Refine 1.2, where
+   the users are able to assign aliases to the projects and afterwards using them as reference.
+ - Introduced new command for updating project alias(es). As the command for the project identification, it is related to the new functionality in Ontotext Refine 1.2.
+   The command can be used to add and/or remove alias(es) from a specific project.
 
 ### Changes
 

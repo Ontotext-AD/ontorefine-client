@@ -24,7 +24,7 @@ import org.mockito.MockitoAnnotations;
 public abstract class BaseCommandTest<T, R extends RefineCommand<T>> {
 
   protected static final String PROJECT_ID = "1234567890987";
-  protected static final String BASE_URI = "http://localhost:1937/";
+  protected static final String BASE_URI = "http://localhost:1937";
 
   @Mock
   protected RefineClient client;
