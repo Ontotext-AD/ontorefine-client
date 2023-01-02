@@ -25,6 +25,8 @@
 
  - Fixed the error messages for creation of the projects. The expected response code from the operation is usually `302`. When the code is different, the produced error
    message is rather misleading, then helpful. There are cases when the code is `200` and the user receives message for error with status code `200`.
+ - Fixed an issue with the provision of the `options` for the create project command. It is related to the way the arguments are expected and handled in the OpenRefine.
+   Basically The `options` should be provided as query parameters to the request, instead of as part of the request payload.
 
 
 ## Version 1.7.1

@@ -18,7 +18,6 @@ import java.net.URL;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
@@ -64,7 +63,9 @@ public class CreateProjectCommand implements RefineCommand<CreateProjectResponse
         multipartEntityBuilder.addTextBody("format", format.getValue(), TEXT_PLAIN);
       }
 
-      if (options != null) {
+      boolean hasOptions = options != null;
+      if (hasOptions) {
+        // currently not working, because of the OpenRefine handling ...
         multipartEntityBuilder.addTextBody("options", options.asJson(), APPLICATION_JSON);
       }
 
@@ -73,14 +74,18 @@ public class CreateProjectCommand implements RefineCommand<CreateProjectResponse
           .addTextBody("project-name", name, TEXT_PLAIN)
           .build();
 
-      HttpUriRequest request = RequestBuilder
+      RequestBuilder requestBuilder = RequestBuilder
           .post(client.createUri(endpoint()))
           .addParameter(Constants.CSRF_TOKEN, token)
           .setHeader(ACCEPT, APPLICATION_JSON.getMimeType())
-          .setEntity(entity)
-          .build();
+          .setEntity(entity);
 
-      return client.execute(request, this);
+      // sacrilege, pure heresy
+      if (hasOptions) {
+        requestBuilder.addParameter("options", options.asJson());
+      }
+
+      return client.execute(requestBuilder.build(), this);
     } catch (IOException ioe) {
       String error = String.format("Failed to create project due to: '%s'", ioe.getMessage());
       throw new RefineException(error);
