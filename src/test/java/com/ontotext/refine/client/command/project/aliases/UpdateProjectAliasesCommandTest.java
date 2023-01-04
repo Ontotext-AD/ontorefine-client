@@ -9,6 +9,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ontotext.refine.client.ResponseCode;
 import com.ontotext.refine.client.command.BaseCommandTest;
 import com.ontotext.refine.client.command.RefineCommands;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicStatusLine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,9 +100,13 @@ class UpdateProjectAliasesCommandTest
     when(response.getStatusLine())
         .thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, 404, "NOT FOUND"));
 
+    ObjectNode json = JsonNodeFactory.instance.objectNode().put("message", "Test error");
+    when(response.getEntity())
+        .thenReturn(new StringEntity(json.toString(), ContentType.APPLICATION_JSON));
+
     UpdateProjectAliasesResponse updateResponse = command().handleResponse(response);
 
     assertEquals(ResponseCode.ERROR, updateResponse.getCode());
-    assertEquals("NOT FOUND", updateResponse.getMessage());
+    assertEquals("Test error", updateResponse.getMessage());
   }
 }
