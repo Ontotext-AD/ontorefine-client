@@ -1,6 +1,6 @@
 package com.ontotext.refine.client.command.project.aliases;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -12,6 +12,7 @@ import com.ontotext.refine.client.exceptions.RefineException;
 import java.io.IOException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -49,7 +50,8 @@ public class UpdateProjectAliasesCommand implements RefineCommand<UpdateProjectA
     try {
       HttpUriRequest request = RequestBuilder
           .post(client.createUri(endpoint()))
-          .setEntity(new StringEntity(buildPayload().asText(), UTF_8))
+          .setEntity(new StringEntity(buildPayload().toString(), APPLICATION_JSON))
+          .setHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.getMimeType())
           .build();
 
       return client.execute(request, this);
