@@ -1,5 +1,6 @@
 package com.ontotext.refine.client.command.project.aliases;
 
+import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,10 +10,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ontotext.refine.client.RefineClient;
 import com.ontotext.refine.client.command.RefineCommand;
 import com.ontotext.refine.client.exceptions.RefineException;
+import com.ontotext.refine.client.util.JsonParser;
 import java.io.IOException;
+import java.io.InputStream;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -51,7 +53,7 @@ public class UpdateProjectAliasesCommand implements RefineCommand<UpdateProjectA
       HttpUriRequest request = RequestBuilder
           .post(client.createUri(endpoint()))
           .setEntity(new StringEntity(buildPayload().toString(), APPLICATION_JSON))
-          .setHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON.getMimeType())
+          .setHeader(CONTENT_TYPE, APPLICATION_JSON.getMimeType())
           .build();
 
       return client.execute(request, this);
@@ -90,7 +92,12 @@ public class UpdateProjectAliasesCommand implements RefineCommand<UpdateProjectA
     if (HttpStatus.SC_OK == statusLine.getStatusCode()) {
       return UpdateProjectAliasesResponse.ok();
     }
-    return UpdateProjectAliasesResponse.error(statusLine.getReasonPhrase());
+
+    try (InputStream is = response.getEntity().getContent()) {
+      JsonNode json = JsonParser.JSON_PARSER.parseJson(is);
+      JsonNode reason = json.has("message") ? json.get("message") : json.get("error");
+      return UpdateProjectAliasesResponse.error(reason.asText());
+    }
   }
 
   /**
