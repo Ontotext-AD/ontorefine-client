@@ -58,15 +58,22 @@ public class CreateProjectCommand implements RefineCommand<CreateProjectResponse
   @Override
   public CreateProjectResponse execute(RefineClient client) throws RefineException {
     try {
+      RequestBuilder requestBuilder = RequestBuilder.post(client.createUri(endpoint()))
+          .addParameter(Constants.CSRF_TOKEN, token)
+          .setHeader(ACCEPT, APPLICATION_JSON.getMimeType());
+
+
       MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
       if (format != null) {
         multipartEntityBuilder.addTextBody("format", format.getValue(), TEXT_PLAIN);
       }
 
-      boolean hasOptions = options != null;
-      if (hasOptions) {
-        // currently not working, because of the OpenRefine handling ...
-        multipartEntityBuilder.addTextBody("options", options.asJson(), APPLICATION_JSON);
+      if (options != null) {
+        // currently not working because of the implementation in the OpenRefine
+        // multipartEntityBuilder.addTextBody("options", options.asJson(), APPLICATION_JSON)
+
+        // Sacrilege, Pure Heresy!
+        requestBuilder.addParameter("options", unwrap(options.asJson()));
       }
 
       HttpEntity entity = multipartEntityBuilder
@@ -74,22 +81,19 @@ public class CreateProjectCommand implements RefineCommand<CreateProjectResponse
           .addTextBody("project-name", name, TEXT_PLAIN)
           .build();
 
-      RequestBuilder requestBuilder = RequestBuilder
-          .post(client.createUri(endpoint()))
-          .addParameter(Constants.CSRF_TOKEN, token)
-          .setHeader(ACCEPT, APPLICATION_JSON.getMimeType())
-          .setEntity(entity);
-
-      // sacrilege, pure heresy
-      if (hasOptions) {
-        requestBuilder.addParameter("options", options.asJson());
-      }
+      requestBuilder.setEntity(entity);
 
       return client.execute(requestBuilder.build(), this);
     } catch (IOException ioe) {
       String error = String.format("Failed to create project due to: '%s'", ioe.getMessage());
       throw new RefineException(error);
     }
+  }
+
+  // and here we need to remove the "[" and "]" ...
+  // we might as well not wrap the object in array in the first place..
+  private String unwrap(String json) {
+    return json.startsWith("[") && json.endsWith("]") ? json.substring(1, json.length() - 1) : json;
   }
 
   @Override
