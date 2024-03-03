@@ -38,7 +38,7 @@ import org.testcontainers.utility.MountableFile;
 @Testcontainers
 public abstract class IntegrationTest {
 
-  private static final String DEFAUL_GDB_DOCKER_IMAGE = "ontotext/graphdb:10.0.0-M1";
+  private static final String DEFAUL_GDB_DOCKER_IMAGE = "ontotext/graphdb:10.6.1";
 
   // Tries to retrieve the image name from the surefire plugin property. Otherwise uses the default
   private static final DockerImageName GDB_DOCKER_IMAGE_NAME =

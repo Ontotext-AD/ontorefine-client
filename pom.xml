@@ -1,315 +1,318 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ontotext</groupId>
-    <artifactId>ontorefine-client</artifactId>
-    <version>1.8.1-SNAPSHOT</version>
+  <groupId>com.ontotext</groupId>
+  <artifactId>ontorefine-client</artifactId>
+  <version>1.8.1-SNAPSHOT</version>
 
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>An Ontotext Refine Client Library</description>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>An Ontotext Refine Client Library</description>
+  <url>https://github.com/Ontotext-AD/ontorefine-client</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>The Ontotext Team</name>
+      <email>refine-support@ontotext.com</email>
+      <organization>Ontotext-AD</organization>
+      <organizationUrl>https://github.com/Ontotext-AD</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com/Ontotext-AD/ontorefine-client.git</connection>
+    <developerConnection>scm:git:git@github.com/Ontotext-AD/ontorefine-client.git</developerConnection>
     <url>https://github.com/Ontotext-AD/ontorefine-client</url>
+  </scm>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
+  <distributionManagement>
+    <repository>
+      <id>all-onto</id>
+      <name>Ontotext Public Maven</name>
+      <url>https://maven.ontotext.com/content/repositories/public</url>
+    </repository>
+  </distributionManagement>
 
-    <developers>
-        <developer>
-            <name>The Ontotext Team</name>
-            <email>refine-support@ontotext.com</email>
-            <organization>Ontotext-AD</organization>
-            <organizationUrl>https://github.com/Ontotext-AD</organizationUrl>
-        </developer>
-    </developers>
+  <properties>
+    <java.version>11</java.version>
+    <project.java.version>11</project.java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <cvss.threshold>6.9</cvss.threshold>
 
-    <scm>
-        <connection>scm:git:git@github.com/Ontotext-AD/ontorefine-client.git</connection>
-        <developerConnection>scm:git:git@github.com/Ontotext-AD/ontorefine-client.git</developerConnection>
-        <url>https://github.com/Ontotext-AD/ontorefine-client</url>
-    </scm>
+    <!-- SonarCloud general configurations -->
+    <sonar.projectKey>Ontotext-AD_ontorefine-client</sonar.projectKey>
+    <sonar.organization>ontotext-ad</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.coverage.jacoco.xmlReportPaths>../ontorefine-client/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
-    <distributionManagement>
-        <repository>
-            <id>all-onto</id>
-            <name>Ontotext Public Maven</name>
-            <url>https://maven.ontotext.com/content/repositories/public</url>
-        </repository>
-    </distributionManagement>
+    <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
+    <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
+    <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
+    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+    <dependency.check.plugin.version>9.0.9</dependency.check.plugin.version>
+    <jacoco.version>0.8.11</jacoco.version>
 
-    <properties>
-        <java.version>11</java.version>
-        <project.java.version>11</project.java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cvss.threshold>6.9</cvss.threshold>
+    <httpcomponents.version>4.5.14</httpcomponents.version>
+    <commons.lang3.version>3.14.0</commons.lang3.version>
+    <commons.io.version>2.15.1</commons.io.version>
+    <jackson.databind.version>2.16.1</jackson.databind.version>
+    <rdf4j.version>4.3.9</rdf4j.version>
 
-        <!-- SonarCloud general configurations -->
-        <sonar.projectKey>Ontotext-AD_ontorefine-client</sonar.projectKey>
-        <sonar.organization>ontotext-ad</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>../ontorefine-client/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <junit.jupiter.version>5.10.2</junit.jupiter.version>
+    <mockito.version>5.10.0</mockito.version>
+    <testcontainers.version>1.19.6</testcontainers.version>
+    <e2e.graphdb.docker.image>ontotext/graphdb:10.6.1</e2e.graphdb.docker.image>
 
-        <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
-        <maven.resources.plugin.version>3.3.0</maven.resources.plugin.version>
-        <maven.checkstyle.plugin.version>3.2.0</maven.checkstyle.plugin.version>
-        <maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
-        <dependency.check.plugin.version>7.4.4</dependency.check.plugin.version>
-        <jacoco.version>0.8.8</jacoco.version>
+    <checkstyle.enabled>true</checkstyle.enabled>
+    <skip.dependency.check>false</skip.dependency.check>
+  </properties>
 
-        <httpcomponents.version>4.5.14</httpcomponents.version>
-        <commons.lang3.version>3.12.0</commons.lang3.version>
-        <commons.io.version>2.11.0</commons.io.version>
-        <jackson.databind.version>2.14.1</jackson.databind.version>
-        <rdf4j.version>4.2.2</rdf4j.version>
+  <profiles>
+    <profile>
+      <id>develop</id>
+      <properties>
+        <checkstyle.enabled>false</checkstyle.enabled>
+      </properties>
+    </profile>
+    <profile>
+      <id>local</id>
+      <properties>
+        <checkstyle.enabled>false</checkstyle.enabled>
+        <skip.dependency.check>true</skip.dependency.check>
+      </properties>
+    </profile>
+  </profiles>
 
-        <junit.jupiter.version>5.9.1</junit.jupiter.version>
-        <mockito.version>4.11.0</mockito.version>
-        <testcontainers.version>1.17.6</testcontainers.version>
-        <e2e.graphdb.docker.image>ontotext/graphdb:10.0.0-M1</e2e.graphdb.docker.image>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpcomponents.version}</version>
+    </dependency>
 
-        <checkstyle.enabled>true</checkstyle.enabled>
-        <skip.dependency.check>false</skip.dependency.check>
-    </properties>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>${httpcomponents.version}</version>
+    </dependency>
 
-    <profiles>
-        <profile>
-            <id>develop</id>
-            <properties>
-                <checkstyle.enabled>false</checkstyle.enabled>
-            </properties>
-        </profile>
-        <profile>
-            <id>local</id>
-            <properties>
-                <checkstyle.enabled>false</checkstyle.enabled>
-                <skip.dependency.check>true</skip.dependency.check>
-            </properties>
-        </profile>
-    </profiles>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons.lang3.version}</version>
+    </dependency>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpcomponents.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons.io.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-            <version>${httpcomponents.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.databind.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons.lang3.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.eclipse.rdf4j</groupId>
+      <artifactId>rdf4j-repository-api</artifactId>
+      <version>${rdf4j.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
-        </dependency>
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.databind.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.eclipse.rdf4j</groupId>
-            <artifactId>rdf4j-repository-api</artifactId>
-            <version>${rdf4j.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.eclipse.rdf4j</groupId>
+      <artifactId>rdf4j-rio-turtle</artifactId>
+      <version>${rdf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
 
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.eclipse.rdf4j</groupId>
-            <artifactId>rdf4j-rio-turtle</artifactId>
-            <version>${rdf4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven.resources.plugin.version}</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
+      <!-- Executes the unit tests on project building -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.plugin.version}</version>
+        <configuration>
+          <systemPropertyVariables>
+            <graphdb.docker.image>${e2e.graphdb.docker.image}</graphdb.docker.image>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
 
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.plugin.version}</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
 
-            <!-- Executes the unit tests on project building -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <graphdb.docker.image>${e2e.graphdb.docker.image}</graphdb.docker.image>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
+      <!-- Verifies the code quality on project building -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven.checkstyle.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <violationSeverity>warning</violationSeverity>
+              <configLocation>google_checks.xml</configLocation>
+              <consoleOutput>true</consoleOutput>
+              <failsOnError>true</failsOnError>
+              <includeTestSourceDirectory>true</includeTestSourceDirectory>
+              <failOnViolation>${checkstyle.enabled}</failOnViolation>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>release</releaseProfiles>
-                    <goals>deploy</goals>
-                </configuration>
-            </plugin>
+      <!-- Checks all of the dependencies for security vulnerabilities -->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>${dependency.check.plugin.version}</version>
+        <configuration>
+          <skip>${skip.dependency.check}</skip>
+          <failBuildOnCVSS>${cvss.threshold}</failBuildOnCVSS>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+      </plugin>
 
-            <!-- Verifies the code quality on project building -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven.checkstyle.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <violationSeverity>warning</violationSeverity>
-                            <configLocation>google_checks.xml</configLocation>
-                            <consoleOutput>true</consoleOutput>
-                            <failsOnError>true</failsOnError>
-                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            <failOnViolation>${checkstyle.enabled}</failOnViolation>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report-aggregate</id>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-            <!-- Checks all of the dependencies for security vulnerabilities -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependency.check.plugin.version}</version>
-                <configuration>
-                    <skip>${skip.dependency.check}</skip>
-                    <failBuildOnCVSS>${cvss.threshold}</failBuildOnCVSS>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report-aggregate</id>
-                        <goals>
-                            <goal>report-aggregate</goal>
-                        </goals>
-                        <phase>verify</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependency.check.plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>aggregate</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>${dependency.check.plugin.version}</version>
+        <configuration>
+          <nvdApiKey>${env.NVD-API-KEY}</nvdApiKey>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
